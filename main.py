@@ -23,16 +23,16 @@ logging.basicConfig(
     format='%(asctime)s | %(levelname)s | %(message)s',
     datefmt='%H:%M:%S'
 )
-logger = logging.getLogger("AegisSystem")
+logger = logging.getLogger("NirSystem")
 
-class AegisSafetyProtocol:
+class NirSafetyProtocol:
     """
     Middleware keamanan deterministik untuk memvalidasi
     probabilitas output dari Generative AI Agent.
     """
     
     def __init__(self):
-        logger.info("Initializing Aegis Safety Layer v1.0...")
+        logger.info("Initializing Nir Safety Layer v1.0...")
         time.sleep(1) # Simulasi loading module
         logger.info(f"Loading Whitelist Database... ({len(CONFIG['WHITELIST_CONTRACTS'])} contracts loaded)")
         logger.info("System Ready. Listening for AI Interrupts...")
@@ -49,7 +49,7 @@ class AegisSafetyProtocol:
 
     def audit_transaction(self, tx_proposal: Dict) -> Tuple[bool, str]:
         """
-        Inti dari Aegis: Melakukan Multi-Layer Check sebelum eksekusi.
+        Inti dari Nir: Melakukan Multi-Layer Check sebelum eksekusi.
         """
         target = tx_proposal.get('to')
         amount = tx_proposal.get('value')
@@ -91,7 +91,7 @@ class MockGPTAgent:
 
 # --- MAIN EXECUTION ---
 if __name__ == "__main__":
-    aegis = AegisSafetyProtocol()
+    nir = NirSafetyProtocol()
     ai_bot = MockGPTAgent()
 
     try:
@@ -104,8 +104,8 @@ if __name__ == "__main__":
             print(f"   > Proposal: {signal['desc']}")
             print(f"   > Target: {signal['to']} | Amount: {signal['value']} ETH")
 
-            # 2. Aegis Melakukan Intervensi
-            is_safe, message = aegis.audit_transaction(signal)
+            # 2. Nir Melakukan Intervensi
+            is_safe, message = nir.audit_transaction(signal)
 
             # 3. Keputusan Final
             if is_safe:
